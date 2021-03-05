@@ -21,7 +21,7 @@ public class ApplicationTests
 		Usuario jose = new Usuario("Jose");
 		Usuario maria = new Usuario("Maria");
 
-		Leilao leilao = new Leilao("Playstation 5 Novo");
+		Leilao leilao = new Leilao("Playstation 5");
 		leilao.propoe(new Lance(jose, 100.0));
 		leilao.propoe(new Lance(joao, 500.0));
 		leilao.propoe(new Lance(maria, 600.0));
@@ -39,6 +39,46 @@ public class ApplicationTests
 		assertEquals(menorEsperado, leiloeiro.getMenorDeTodos(), 0.00001);
 		assertEquals(mediaEsperada, leiloeiro.getMedia(), 0.00001);
 	}
+	
+	@Test
+    public void deveEntenderLancesEmOrdemDecrescente()
+	{
+        Usuario joao = new Usuario("Joao"); 
+        Usuario maria = new Usuario("Maria"); 
+        Leilao leilao = new Leilao("Playstation Portable");
+
+        leilao.propoe(new Lance(joao,400.0));
+        leilao.propoe(new Lance(maria,300.0));
+        leilao.propoe(new Lance(joao,200.0));
+        leilao.propoe(new Lance(maria,100.0));
+
+        Avaliador leiloeiro = new Avaliador();
+        leiloeiro.avalia(leilao);
+
+        assertEquals(400.0, leiloeiro.getMaiorDeTodos(), 0.0001);
+        assertEquals(100.0, leiloeiro.getMenorDeTodos(), 0.0001);
+    }
+	
+    @Test
+    public void deveEntenderLancesEmOrdemAleatoria()
+    {
+        Usuario joao = new Usuario("Joao"); 
+        Usuario maria = new Usuario("Maria"); 
+        Leilao leilao = new Leilao("Xbox One X");
+
+        leilao.propoe(new Lance(joao,200.0));
+        leilao.propoe(new Lance(maria,450.0));
+        leilao.propoe(new Lance(joao,120.0));
+        leilao.propoe(new Lance(maria,700.0));
+        leilao.propoe(new Lance(joao,630.0));
+        leilao.propoe(new Lance(maria,230.0));
+
+        Avaliador leiloeiro = new Avaliador();
+        leiloeiro.avalia(leilao);
+
+        assertEquals(700.0, leiloeiro.getMaiorDeTodos(), 0.0001);
+        assertEquals(120.0, leiloeiro.getMenorDeTodos(), 0.0001);
+    }
 
 	@SuppressWarnings("unused")
 	@Test
